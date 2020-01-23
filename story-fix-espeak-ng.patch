@@ -1,14 +1,5 @@
-From 544b3454ddb6370f29107ec24be8585dfb581790 Mon Sep 17 00:00:00 2001
-From: Martin Abente Lahaye <martin.abente.lahaye@gmail.com>
-Date: Wed, 11 Dec 2019 01:59:48 -0300
-Subject: [PATCH] fix-espeak-ng
-
----
- utils.py | 111 +++++++++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 95 insertions(+), 16 deletions(-)
-
 diff --git a/utils.py b/utils.py
-index d0c4c2a..44e1e3b 100644
+index 59605ce..e8df37e 100644
 --- a/utils.py
 +++ b/utils.py
 @@ -38,19 +38,97 @@ def json_dump(data):
@@ -122,21 +113,12 @@ index d0c4c2a..44e1e3b 100644
  
  
  def speak(text):
-@@ -60,10 +138,11 @@ def speak(text):
+@@ -60,7 +138,7 @@ def speak(text):
          text = int(text)
      safetext = '{}'.format(quote(str(text)))
  
 -    lang = os.environ['LANG'][0:2]
 +    lang = os.environ['LANG'][0:2].lower()
      if lang in VOICES:
--        command = 'espeak -v %s "%s"' % (VOICES[lang], safetext)
-+        command = 'espeak -v %s "%s"' % (lang, safetext)
+         language_option = '-v ' + VOICES[lang]
      else:
-         command = 'espeak "%s"' % (safetext)
- 
--    os.system('%s --stdout | aplay' % command)
-+    os.system('%s --stdout > /tmp/espeak.audio' % command)
-+    os.system('gst-play-1.0 /tmp/espeak.audio')
--- 
-2.19.1
-
