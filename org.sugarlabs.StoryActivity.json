@@ -23,13 +23,12 @@
     "modules": [
         "shared-modules/dbus-glib/dbus-glib-0.110.json",
         "shared-modules/intltool/intltool-0.51.json",
-        "shared-modules/python2.7/python-2.7.json",
         {
             "name": "empy",
             "cleanup": [ "*" ],
             "buildsystem": "simple",
             "build-commands": [
-                "pip2 install --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} empy"
+                "pip3 install --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} empy"
             ],
             "sources": [
                 {
@@ -39,9 +38,9 @@
                 }
             ],
             "post-install": [
-                "chmod +x /app/lib/python2.7/site-packages/em.py",
+                "chmod +x /app/lib/python3.7/site-packages/em.py",
                 "mkdir -p /app/bin/",
-                "ln -s /app/lib/python2.7/site-packages/em.py /app/bin/empy"
+                "ln -s /app/lib/python3.7/site-packages/em.py /app/bin/empy"
             ]
         },
         {
@@ -120,7 +119,7 @@
             "name": "python-dbus",
             "buildsystem": "simple",
             "build-commands": [
-                "pip2 install --no-index --find-links \"file://${PWD}\" --install-option=\"--prefix=${FLATPAK_DEST}\" dbus-python"
+                "pip3 install --no-index --find-links \"file://${PWD}\" --install-option=\"--prefix=${FLATPAK_DEST}\" dbus-python"
             ],
             "sources": [
                 {
@@ -134,7 +133,7 @@
             "name": "decorator",
             "buildsystem": "simple",
             "build-commands": [
-                "pip2 install --no-index --find-links \"file://${PWD}\" --install-option=\"--prefix=${FLATPAK_DEST}\" decorator"
+                "pip3 install --no-index --find-links \"file://${PWD}\" --install-option=\"--prefix=${FLATPAK_DEST}\" decorator"
             ],
             "sources": [
                 {
@@ -148,7 +147,7 @@
             "name": "python-six",
             "buildsystem": "simple",
             "build-commands": [
-                "pip2 install --no-index --find-links \"file://${PWD}\" --install-option=\"--prefix=${FLATPAK_DEST}\" six"
+                "pip3 install --no-index --find-links \"file://${PWD}\" --install-option=\"--prefix=${FLATPAK_DEST}\" six"
             ],
             "sources": [
                 {
@@ -175,38 +174,10 @@
             ]
         },
         {
-            "name": "pycairo",
-            "buildsystem": "simple",
-            "build-commands": [
-                "pip2 install --no-index --find-links \"file://${PWD}\" --install-option=\"--prefix=${FLATPAK_DEST}\" pycairo"
-            ],
-            "sources": [
-                {
-                    "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/3c/1a/c0478ecab31baae50fda9956547788afbd0ca563adc52c9b03cab30f17eb/pycairo-1.18.2.tar.gz",
-                    "sha256": "dcb853fd020729516e8828ad364084e752327d4cff8505d20b13504b32b16531"
-                }
-            ]
-        },
-        {
-            "name": "PyGObject",
-            "buildsystem": "simple",
-            "build-commands": [
-                "pip2 install --no-use-pep517 --no-index --find-links ${PWD} --install-option=\"--prefix=${FLATPAK_DEST}\" $PWD"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://files.pythonhosted.org/packages/46/8a/b183f3edc812d4d28c8b671a922b5bc2863be5d38c56b3ad9155815e78dd/PyGObject-3.34.0.tar.gz",
-                    "sha256": "2acb0daf2b3a23a90f52066cc23d1053339fee2f5f7f4275f8baa3704ae0c543"
-                }
-            ]
-        },
-        {
             "name": "sugar-toolkit-gtk3",
             "no-parallel-make": true,
             "config-opts": [
-                "--with-python2"
+                "--with-python3"
             ],
             "sources": [
                 {
@@ -217,6 +188,10 @@
                 {
                     "type": "patch",
                     "path": "sugar-toolkit-robust.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "sugar-toolkit-fix-speech.patch"
                 }
             ]
         },
@@ -224,37 +199,14 @@
             "name": "sugarapp",
             "buildsystem": "simple",
             "build-commands": [
-                "pip2 install --no-index --find-links ${PWD} --install-option=\"--prefix=${FLATPAK_DEST}\" $PWD"
+                "pip3 install --no-index --find-links ${PWD} --install-option=\"--prefix=${FLATPAK_DEST}\" $PWD"
             ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://github.com/tchx84/sugarapp.git",
-                    "tag": "v1.8",
-                    "commit": "0436e2f4957c03abb6dd3cfcc39f67e58b26bef6"
-                }
-            ]
-        },
-        {
-            "name": "telepathy-python",
-            "no-parallel-make": true,
-            "rm-configure": true,
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://telepathy.freedesktop.org/releases/telepathy-python/telepathy-python-0.15.19.tar.gz",
-                    "sha256": "244c0e1bf4bbd78ae298ea659fe10bf3a73738db550156767cc2477aedf72376"
-                },
-                {
-                    "type": "patch",
-                    "path": "telepathy-python-fix-build.patch"
-                },
-                {
-                    "type": "script",
-                    "dest-filename": "autogen.sh",
-                    "commands": [
-                        "autoreconf -vif"
-                    ]
+                    "tag": "v1.11",
+                    "commit": "68b300b93be31dca3e6d621c107c703bf140aa03"
                 }
             ]
         },
@@ -276,10 +228,21 @@
             ]
         },
         {
+            "name": "gst-plugins-espeak",
+            "no-parallel-make": true,
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/sugarlabs/gst-plugins-espeak.git",
+                    "commit": "b8e815a1b8ca1468d92ab8631779e3ee3d832613"
+                }
+            ]
+        },
+        {
             "name": "art4apps",
             "buildsystem": "simple",
             "build-commands": [
-                "pip2 install --no-index --find-links ${PWD} --install-option=\"--prefix=${FLATPAK_DEST}\" $PWD"
+                "pip3 install --no-index --find-links ${PWD} --install-option=\"--prefix=${FLATPAK_DEST}\" $PWD"
             ],
             "sources": [
                 {
@@ -302,14 +265,13 @@
             "name": "story",
             "buildsystem": "simple",
             "build-commands": [
-                "python2 setup.py install --prefix=/app --skip-install-desktop-file --skip-install-mime"
+                "python3 setup.py install --prefix=/app --skip-install-desktop-file --skip-install-mime"
             ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://github.com/sugarlabs/story.git",
-                    "tag": "v19",
-                    "commit": "c41e6998158ca2e128b1ef1f19a7f5219ee116b8"
+                    "commit": "e3afa9ae8965488c4ed85bb076c9d53f0b2f7aef"
                 },
                 {
                     "type": "patch",
@@ -325,6 +287,10 @@
                 },
                 {
                     "type": "patch",
+                    "path": "story-fix-art4apps.patch"
+                },
+                {
+                    "type": "patch",
                     "path": "story-monitors.patch"
                 },
                 {
@@ -333,8 +299,8 @@
                 }
             ],
             "post-install": [
-                "python3 /app/bin/sugarapp-gen-appdata activity/activity.info appdata",
-                "python3 /app/bin/sugarapp-gen-desktop activity/activity.info desktop",
+                "sugarapp-gen-appdata activity/activity.info appdata",
+                "sugarapp-gen-desktop activity/activity.info desktop",
                 "install -D appdata /app/share/metainfo/org.sugarlabs.StoryActivity.appdata.xml",
                 "install -D desktop /app/share/applications/org.sugarlabs.StoryActivity.desktop",
                 "install -D activity/activity-story.svg /app/share/icons/hicolor/scalable/apps/org.sugarlabs.StoryActivity.svg"
