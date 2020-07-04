@@ -84,7 +84,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/sugarlabs/story.git",
-                    "commit": "e3afa9ae8965488c4ed85bb076c9d53f0b2f7aef"
+                    "commit": "5f57d7294dd6272d9b9afe304dca7e10c4b3883b"
                 },
                 {
                     "type": "patch",
@@ -97,10 +97,6 @@
                 {
                     "type": "patch",
                     "path": "story-fix-espeak-ng.patch"
-                },
-                {
-                    "type": "patch",
-                    "path": "story-fix-art4apps.patch"
                 },
                 {
                     "type": "patch",
