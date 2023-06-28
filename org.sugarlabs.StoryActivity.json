@@ -96,7 +96,12 @@
                 {
                     "type": "git",
                     "url": "https://github.com/sugarlabs/story.git",
-                    "commit": "5f57d7294dd6272d9b9afe304dca7e10c4b3883b"
+                    "tag": "v20",
+                    "commit": "f93d8ecd013a49a5017723534b09f21c9fbfefb5",
+                    "x-checker-data": {
+                        "type": "git",
+                        "tag-pattern": "^v([\\d.]+)$"
+                    }
                 },
                 {
                     "type": "patch",
