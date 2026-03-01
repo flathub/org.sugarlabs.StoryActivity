@@ -1,9 +1,9 @@
 {
     "app-id": "org.sugarlabs.StoryActivity",
     "base": "org.sugarlabs.BaseApp",
-    "base-version": "24.04",
+    "base-version": "26.04",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "46",
+    "runtime-version": "50",
     "sdk": "org.gnome.Sdk",
     "separate-locales": false,
     "command": "sugarapp",
@@ -67,7 +67,7 @@
             "name": "art4apps",
             "buildsystem": "simple",
             "build-commands": [
-                "pip3 install --no-index --find-links ${PWD} --prefix=${FLATPAK_DEST} $PWD"
+                "pip3 install --no-index --find-links ${PWD} --prefix=${FLATPAK_DEST} $PWD --no-build-isolation"
             ],
             "sources": [
                 {
@@ -122,6 +122,10 @@
                 {
                     "type": "patch",
                     "path": "story-info.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "story-fix-no-quote.patch"
                 }
             ],
             "post-install": [
