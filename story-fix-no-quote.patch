@@ -1,0 +1,20 @@
+diff --git a/utils.py b/utils.py
+index 59605ce..81235be 100644
+--- a/utils.py
++++ b/utils.py
+@@ -10,7 +10,6 @@
+ # Foundation, 51 Franklin Street, Suite 500 Boston, MA 02110-1335 USA
+ 
+ import os
+-from pipes import quote
+ from io import StringIO
+ 
+ import json
+@@ -58,7 +57,6 @@ def speak(text):
+ 
+     if type(text) == float and int(text) == text:
+         text = int(text)
+-    safetext = '{}'.format(quote(str(text)))
+ 
+     lang = os.environ['LANG'][0:2]
+     if lang in VOICES:
